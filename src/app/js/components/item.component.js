@@ -1,7 +1,10 @@
 (function () {
 
     var todoItem = {
-        templateUrl: '/js/components/item.component.html'
+        templateUrl: '/js/components/item.component.html',
+        bindings: {
+            todo: '<'
+        }
     };
 
     angular.module('todoApp')
