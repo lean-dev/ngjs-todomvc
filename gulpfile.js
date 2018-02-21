@@ -1,6 +1,10 @@
 
 const gulp = require('gulp');
 
+// Gulp plugins
+const inject    = require('gulp-inject');
+const sortFiles = require('gulp-angular-filesort');
+
 // NPM deps
 const Browser = require('browser-sync');
 const webpack = require("webpack");
@@ -13,13 +17,30 @@ const browser = Browser.create();
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 // Build Tasks
-// * pages
+// * page
+// * injectApp
+// * app
 // * server
 // * deps
 
-gulp.task(function pages() {
+gulp.task(function page() {
     return gulp.src('./src/app/index.html')
         .pipe(gulp.dest('./.tmp'));
+});
+
+gulp.task(function injectApp() {
+
+    var appFiles = gulp.src('./src/app/js/**/*.js')
+        .pipe(sortFiles());
+
+    return gulp.src('./.tmp/index.html')
+        .pipe(inject(appFiles, {ignorePath: '/src/app'}))
+        .pipe(gulp.dest('./.tmp'));
+});
+
+gulp.task(function app() {
+    return gulp.src('./src/app/js/**/*.js')
+        .pipe(gulp.dest('./.tmp/js'));
 });
 
 gulp.task(function server() {
@@ -71,7 +92,7 @@ gulp.task(function deps(done) {
 // * dev
 
 
-gulp.task('build', gulp.series('pages','deps'));
+gulp.task('build', gulp.series('page','deps','app','injectApp'));
 
 gulp.task('default', gulp.series('build'));
 
