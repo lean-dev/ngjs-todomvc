@@ -39,7 +39,7 @@ gulp.task(function injectApp() {
 });
 
 gulp.task(function app() {
-    return gulp.src('./src/app/js/**/*.js')
+    return gulp.src(['./src/app/js/**/*.js','./src/app/js/**/*.html'])
         .pipe(gulp.dest('./.tmp/js'));
 });
 
