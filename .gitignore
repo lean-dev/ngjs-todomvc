@@ -1,3 +1,6 @@
+# Dev artefacts
+/.tmp/
+
 # NPM deps
 /node_modules/
 
