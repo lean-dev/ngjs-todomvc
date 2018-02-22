@@ -8,10 +8,13 @@
         controller: ActionsController
     };
 
-    function ActionsController(eventBus) {
+    function ActionsController(eventBus, $routeParams) {
+
+       
 
         var vm = this;
-
+        vm.filter = $routeParams.state || 'all';
+        
         Object.defineProperty(vm,'remainingCount', {
             enumerable: true,
             configurable: true,

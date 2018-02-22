@@ -30,7 +30,10 @@
 
         this.getAll = function(){
             
-            socket.emit('getAll');
+            setTimeout(function() {
+                socket.emit('getAll');
+            }, 500);
+            
             return getAllPromise.promise;   
         };
 

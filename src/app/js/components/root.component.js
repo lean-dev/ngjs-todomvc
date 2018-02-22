@@ -2,18 +2,32 @@
 
     var appRoor = {
         templateUrl: '/js/components/root.component.html',
-        controller: RootController
+        controller: RootController,
+        bindings: {
+            todos: "="
+        }
     };
 
-    RootController.$inject = ['socketStore','eventBus'];
-    function RootController(localStore, eventBus) {
+    RootController.$inject = ['socketStore','eventBus','$routeParams','$route'];
+    function RootController(localStore, eventBus, $routeParams, $route) {
+
+        console.log($route.current.scope.$resolve.todos);
+        
         var vm = this;
-        vm.todos = [];
 
-        localStore.getAll().then(function(todos) {
-            vm.todos = todos;
-        });
+        vm.filteredTodos = [];
+        var filter = $routeParams.state || 'all';
 
+        this.$onInit = function() {
+            vm.filteredTodos = vm.todos.filter(function (t){
+                if (filter === 'all') {
+                    return true;
+                } else {
+                    return t.done === (filter === 'completed');
+                }
+            });
+        }
+        
         eventBus.subscribe('todo.deleted', function(id) {
 
             var ix = vm.todos.findIndex(function(t) { return t.id == id});
