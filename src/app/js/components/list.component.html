@@ -3,6 +3,6 @@
     <input id="toggle-all" class="toggle-all" type="checkbox">
     <label for="toggle-all">Mark all as complete</label>
     <ul class="todo-list">
-        <todo-item ng-repeat="t in $ctrl.todos track by id" todo="t"></todo-item>
+        <todo-item ng-repeat="t in $ctrl.todos track by t.id" todo="t"></todo-item>
     </ul>
 </section>
