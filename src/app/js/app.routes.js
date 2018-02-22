@@ -1,6 +1,6 @@
 
 angular.module('todoApp')
-    .config(function($stateProvider) {
+    .config(function($stateProvider,$urlRouterProvider) {
 
         var homeState = {
             name: 'home',
@@ -29,5 +29,5 @@ angular.module('todoApp')
         
           $stateProvider.state(homeState);
           $stateProvider.state(filteredState);
-          //$stateProvider.otherwise('home');
+          $urlRouterProvider.otherwise('/');
     });

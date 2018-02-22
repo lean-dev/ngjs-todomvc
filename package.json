@@ -4,6 +4,7 @@
     "@uirouter/angularjs": "^1.0.15",
     "PubSub": "^3.4.0",
     "angular": "^1.6.9",
+    "gulp-ng-annotate": "^2.1.0",
     "todomvc-app-css": "^2.1.0"
   },
   "devDependencies": {

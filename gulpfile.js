@@ -4,6 +4,7 @@ const gulp = require('gulp');
 // Gulp plugins
 const inject    = require('gulp-inject');
 const sortFiles = require('gulp-angular-filesort');
+const ngAnnotate = require('gulp-ng-annotate');
 
 // NPM deps
 const Browser = require('browser-sync');
@@ -93,6 +94,12 @@ gulp.task(function watch(done) {
     gulp.watch('./src/app/**/*.*', gulp.series('app','page'));
 
     done();
+});
+
+gulp.task(function annotate(){
+    return gulp.src('./src/app/js/**/*.js')
+        .pipe(ngAnnotate())
+        .pipe('./src')
 });
 
 // Main Tasks
