@@ -18,37 +18,39 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 // Build Tasks
 // * page
-// * injectApp
 // * app
 // * server
 // * deps
+// * watch
 
-gulp.task(function page() {
-    return gulp.src('./src/app/index.html')
-        .pipe(gulp.dest('./.tmp'));
-});
-
-gulp.task(function injectApp() {
+gulp.task(function page(done) {
 
     var appFiles = gulp.src('./src/app/js/**/*.js')
         .pipe(sortFiles());
 
-    return gulp.src('./.tmp/index.html')
+    gulp.src('./src/app/index.html')
         .pipe(inject(appFiles, {ignorePath: '/src/app'}))
         .pipe(gulp.dest('./.tmp'));
+
+    browser.reload();
+    done();
 });
 
-gulp.task(function app() {
-    return gulp.src(['./src/app/js/**/*.js','./src/app/js/**/*.html'])
+gulp.task(function app(done) {
+    gulp.src(['./src/app/js/**/*.js','./src/app/js/**/*.html'])
         .pipe(gulp.dest('./.tmp/js'));
+
+    browser.reload();
+    done();
 });
 
-gulp.task(function server() {
+gulp.task(function server(done) {
     var config = {
         server: '.tmp',
         open: true
     };
 
+    done();
     browser.init(config);
 });
 
@@ -86,16 +88,23 @@ gulp.task(function deps(done) {
 
 });
 
+gulp.task(function watch(done) {
+
+    gulp.watch('./src/app/**/*.*', gulp.series('app','page'));
+
+    done();
+});
+
 // Main Tasks
 // * build (default)
 // * serve
 // * dev
 
 
-gulp.task('build', gulp.series('page','deps','app','injectApp'));
+gulp.task('build', gulp.series('deps','app','page'));
 
 gulp.task('default', gulp.series('build'));
 
 gulp.task('serve', gulp.series('build','server'));
 
-gulp.task('dev', gulp.series('serve'));
+gulp.task('dev', gulp.series('serve','watch'));
