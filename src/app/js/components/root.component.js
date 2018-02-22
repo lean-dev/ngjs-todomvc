@@ -2,17 +2,20 @@
 
     var appRoor = {
         templateUrl: '/js/components/root.component.html',
-        controller: RootController
+        controller: RootController,
+        bindings: {
+            todos: "<",
+            state: "<"
+        }
     };
 
     RootController.$inject = ['socketStore','eventBus'];
     function RootController(localStore, eventBus) {
         var vm = this;
-        vm.todos = [];
 
-        localStore.getAll().then(function(todos) {
-            vm.todos = todos;
-        });
+        this.$onInit = function() {
+            console.log("State: " + vm.state);
+        };
 
         eventBus.subscribe('todo.deleted', function(id) {
 

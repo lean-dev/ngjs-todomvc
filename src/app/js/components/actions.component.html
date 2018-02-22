@@ -5,13 +5,13 @@
     <!-- Remove this if you don't implement routing -->
     <ul class="filters">
         <li>
-            <a class="selected" href="#/">All</a>
+            <a class="selected" ui-sref="home" ui-sref-active="selected">All</a>
         </li>
         <li>
-            <a href="#/active">Active</a>
+            <a ui-sref="filtered({ state: 'active' })" ui-sref-active="selected">Active</a>
         </li>
         <li>
-            <a href="#/completed">Completed</a>
+            <a ui-sref="filtered({ state: 'completed' })" ui-sref-active="selected">Completed</a>
         </li>
     </ul>
     <!-- Hidden if no completed items are left ↓ -->

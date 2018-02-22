@@ -1,2 +1,2 @@
 
-angular.module('todoApp',[]);
+angular.module('todoApp',['ui.router']);

@@ -7,7 +7,9 @@
         var getAllPromise = $q.defer();
 
         socket.on('getAllResponse', function(data) {
-            getAllPromise.resolve(data);
+            setTimeout(function() {
+                getAllPromise.resolve(data);
+            }, 500);
         })
       
         socket.on('createResponse', function(data) {
